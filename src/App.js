@@ -1,34 +1,31 @@
 import React, { Component } from 'react';
-import Project from "./Projects/project1"
-import AddProject from "./Projects/addProject"
+import PeopleList from "./Components/PeopleList";
+import AddPeople from "./Components/AddPeople";
 import './App.css';
 
 class App extends Component {
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     this.state = {
-      projects: []
-    };
-  }
-  componentWillMount(){
-    this.setState({
-      projects: [
-        {title: "Bussiness", category: "Web Design"},
-        {title: "Social", category: "Web Development"},
-        {title: "E-commerce", category: "Mobile Design"}
+      people: [
+        {name: "Ali", age: 21, profession: "builder", id: 1},
+        {name: "John", age: 30, profession: "mechanic", id: 2},
+        {name: "Hans", age: 34, profession: "journalist", id: 3}
       ]
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+  handleChange(person){
+    this.setState(state => {
+      state.people.push(person);
+      return state;
     });
   }
-  handleAddProject(project){
-    let projects = this.state.projects;
-    projects.push(project);
-    this.setState({projects: projects});
-  }
-  render() {
+  render(){
     return (
-      <div className="App">
-        <AddProject addProject={this.handleAddProject.bind(this)}/>
-        <Project projects={this.state.projects}/>
+      <div>
+        <PeopleList people={this.state.people} />
+        <AddPeople onChange={this.handleChange} />
       </div>
     );
   }
