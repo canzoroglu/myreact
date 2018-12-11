@@ -25,7 +25,7 @@ class App extends Component {
     return (
       <div>
         <PeopleList people={this.state.people} />
-        <AddPeople onChange={this.handleChange} />
+        <AddPeople people={this.state.people} onChange={this.handleChange} />
       </div>
     );
   }

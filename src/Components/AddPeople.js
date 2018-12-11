@@ -1,37 +1,26 @@
 import React, {Component} from "react";
 
 class AddPeople extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      name: "",
-      age : "",
-      profession: "",
-      id: 3
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-  handleChange(event){
-    this.setState({
-      [event.target.id]: event.target.value,
-      id: this.state.id + 1
-    });
-  }
+
   handleSubmit(e){
     e.preventDefault();
-    this.props.onChange(this.state);
+    const name = document.querySelector("#name").value;
+    const age = document.querySelector("#age").value;
+    const profession = document.querySelector("#profession").value;
+    const people = this.props.people;
+    let person = {name, age, profession, id: people[people.length - 1].id + 1};
+    this.props.onChange(person);
   }
   render(){
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={(e) => this.handleSubmit(e)}>
           <label htmlFor="name">Name: </label>
-          <input type="text" id="name" onChange={this.handleChange} /><br />
+          <input type="text" id="name" required /><br />
           <label htmlFor="age">Age: </label>
-          <input type="text" id="age" onChange={this.handleChange} /><br />
+          <input type="text" id="age" required /><br />
           <label htmlFor="profession">Profession: </label>
-          <input type="text" id="profession" onChange={this.handleChange} /><br />
+          <input type="text" id="profession" required /><br />
           <button>Submit</button>
         </form>
       </div>
