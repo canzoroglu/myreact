@@ -14,6 +14,7 @@ class App extends Component {
       ]
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
   handleChange(person){
     this.setState(state => {
@@ -21,10 +22,14 @@ class App extends Component {
       return state;
     });
   }
+  handleDelete(id){
+    const people = this.state.people.filter(person => person.id !== id);
+    this.setState({people,});
+  }
   render(){
     return (
       <div>
-        <PeopleList people={this.state.people} />
+        <PeopleList onDelete={this.handleDelete} people={this.state.people} />
         <AddPeople people={this.state.people} onChange={this.handleChange} />
       </div>
     );
