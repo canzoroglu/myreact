@@ -1,25 +1,15 @@
 import React, {Component} from "react";
+import {connect} from "react-redux";
 
 class Post extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      data: null
-    };
-  }
-  componentDidMount(){
-    let id = this.props.match.params.post_id;
-    fetch("http://jsonplaceholder.typicode.com/posts/" + id)
-      .then(response => response.json())
-      .then(json => this.setState({data: json}));
-  }
+
   render(){
-    const {data} = this.state;
-    const post = data ? (
+    console.log(this.props);
+    const post = this.props.post ? (
       <div className="post card">
         <div className="card-content">
-          <span className="card-title">{data.title}</span>
-          <p>{data.body}</p>
+          <span className="card-title">{this.props.post.title}</span>
+          <p>{this.props.post.body}</p>
         </div>
       </div>
     ) : (
@@ -30,4 +20,10 @@ class Post extends Component {
   }
 }
 
-export default Post;
+const mapStateToProps = (state, ownProps) => {
+  let id = ownProps.match.params.post_id;
+  return {
+    post: state.posts.find(post => post.id === id)
+  };
+}
+export default connect(mapStateToProps)(Post);
