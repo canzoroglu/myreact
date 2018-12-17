@@ -1,22 +1,13 @@
 import React, {Component} from "react";
 import {Link} from "react-router-dom";
 import Pokemon from "../assets/images/pokeball.png";
+import {connect} from "react-redux";
 
 class Home extends Component {
 
-  constructor(props){
-    super(props);
-    this.state = {
-      posts: []
-    };
-  }
-  componentDidMount(){
-    fetch('https://jsonplaceholder.typicode.com/posts')
-      .then(response => response.json())
-      .then(json => this.setState({posts: json.slice(0, 10)}));
-  }
   render(){
-    const {posts} = this.state;
+    console.log(this.props);
+    const {posts} = this.props;
     const postList = posts.length ? (posts.map(post => {
       return (
         <div className="post card" key={post.id}>
@@ -39,5 +30,10 @@ class Home extends Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  return {
+    posts: state.posts
+  };
+}
 
-export default Home;
+export default connect(mapStateToProps)(Home);
